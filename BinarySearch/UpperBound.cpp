@@ -15,7 +15,7 @@ int lowerBound(vector<int> arr, int n, int x) {
     while (low <= high) {
         int mid = (low + high) / 2;
 
-        if (arr[mid] >= x) {
+        if (arr[mid] > x) {
             ans = mid;
             high = mid - 1;
         }
@@ -29,7 +29,7 @@ int lowerBound(vector<int> arr, int n, int x) {
 int main()
 {
     vector<int> arr = {3, 5, 6, 15, 19};
-    int size = 5, x = 9;
+    int size = 5, x = 6;
     int ind = lowerBound(arr, size, x);
     cout << "The lower bound is the index: " << ind << "\n";
     return 0;
