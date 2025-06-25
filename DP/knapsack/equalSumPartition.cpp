@@ -1,49 +1,41 @@
-
 #include <iostream>
 #include <vector>
 using namespace std;
 
-// Function to check if there is a subset of 'arr' with a sum equal to 'target'
-bool subsetSumUtil(int ind, int target, vector<int>& arr, vector<vector<int>>& dp) {
-   
-    if (target == 0)
-        return true;
-
-    if (ind == 0)
-        return arr[0] == target;
-
+bool subsetSum(int index, int target, vector<int>& nums, vector<vector<int>>& dp) {
+    if (target == 0) return true;
+    if (index == 0) return nums[0] == target;
     
-    if (dp[ind][target] != -1)
-        return dp[ind][target];
+    if (dp[index][target] != -1) return dp[index][target];
 
+    bool notTake = subsetSum(index - 1, target, nums, dp);
+    bool take = false;
+    if (nums[index] <= target)
+        take = subsetSum(index - 1, target - nums[index], nums, dp);
 
-    bool notTaken = subsetSumUtil(ind - 1, target, arr, dp);
-
-  
-    bool taken = false;
-    if (arr[ind] <= target)
-        taken = subsetSumUtil(ind - 1, target - arr[ind], arr, dp);
-
-    
-    return dp[ind][target] = notTaken || taken;
+    return dp[index][target] = take || notTake;
 }
 
-bool subsetSumToK(int n, int k, vector<int>& arr) {
-    vector<vector<int>> dp(n, vector<int>(k + 1, -1));
+bool canPartition(vector<int>& nums) {
+    int totalSum = 0;
+    for (int num : nums) totalSum += num;
 
-    return subsetSumUtil(n - 1, k, arr, dp);
+    if (totalSum % 2 != 0) return false;
+
+    int target = totalSum / 2;
+    int n = nums.size();
+
+    vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+    return subsetSum(n - 1, target, nums, dp);
 }
 
 int main() {
-    vector<int> arr = {1, 2, 3, 4};
-    int k = 4;
-    int n = arr.size();
-
-   
-    if (subsetSumToK(n, k, arr))
-        cout << "Subset with the given target found";
+    vector<int> nums = {1, 5, 11, 5};
+    
+    if (canPartition(nums))
+        cout << "Can be partitioned into two subsets of equal sum." << endl;
     else
-        cout << "Subset with the given target not found";
+        cout << "Cannot be partitioned into two subsets of equal sum." << endl;
 
     return 0;
 }
