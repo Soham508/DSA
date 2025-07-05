@@ -1,10 +1,14 @@
-/* How many subsets of given array can be formed such that difference between sum of elements of subset1 
+/* How many subsets of given array can be formed such that difference between sum of elements of subset1
 and sum of elements of subset2 is given difference.
 
 Sum(S1) - Sum(S2) = D (given)
 Sum(S1) + Sum(S2) = Sum(A) (total sum of array)
 Sum(S1) = (Sum(A) + D) / 2
 So, we need to find number of subsets of array whose sum is equal to (Sum(A) + D)/2.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Problem is same as target sum problem. We can use same logic to solve this problem.
 */
 
 #include <iostream>
